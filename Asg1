@@ -1,0 +1,95 @@
+import java.util.ArrayList;
+import java.util.List;
+
+/**
+ * Represents a single book with a title and an author.
+ */
+class Book {
+    private String title;
+    private String author;
+
+    public Book(String title, String author) {
+        this.title = title;
+        this.author = author;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public String getAuthor() {
+        return author;
+    }
+
+    @Override
+    public String toString() {
+        return "Title: " + title + ", Author: " + author;
+    }
+}
+
+/**
+ * Represents a library containing a collection of books.
+ */
+class Library {
+    private List<Book> books;
+
+    public Library() {
+        this.books = new ArrayList<>();
+    }
+
+    // Method to add a book to the library
+    public void addBook(Book book) {
+        this.books.add(book);
+    }
+
+    /**
+     * Lists all books in the library by a specific author.
+     * @param authorName The name of the author to search for.
+     */
+    public void listBooksByAuthor(String authorName) {
+        System.out.println("Searching for books by author: '" + authorName + "'...\n");
+        boolean found = false;
+
+        for (Book book : this.books) {
+            // Using equalsIgnoreCase for a case-insensitive search
+            if (book.getAuthor().equalsIgnoreCase(authorName)) {
+                System.out.println("  - " + book.toString());
+                found = true;
+            }
+        }
+
+        // If no books were found by the author, print a message.
+        if (!found) {
+            System.out.println("  No books found by this author in the library.");
+        }
+        System.out.println("------------------------------------------");
+    }
+}
+
+/**
+ * Main class to run the library demonstration.
+ */
+public class Main {
+    public static void main(String[] args) {
+        // Create a new library instance
+        Library myLibrary = new Library();
+
+        // Add some books to the library
+        myLibrary.addBook(new Book("The Hobbit", "J.R.R. Tolkien"));
+        myLibrary.addBook(new Book("1984", "George Orwell"));
+        myLibrary.addBook(new Book("The Lord of the Rings", "J.R.R. Tolkien"));
+        myLibrary.addBook(new Book("Animal Farm", "George Orwell"));
+        myLibrary.addBook(new Book("The Silmarillion", "J.R.R. Tolkien"));
+
+        // --- Test Cases ---
+
+        // 1. Search for an author with multiple books
+        myLibrary.listBooksByAuthor("J.R.R. Tolkien");
+
+        // 2. Search for another author
+        myLibrary.listBooksByAuthor("George Orwell");
+
+        // 3. Search for an author not in the library
+        myLibrary.listBooksByAuthor("Jane Austen");
+    }
+}
